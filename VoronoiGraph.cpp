@@ -3,6 +3,8 @@
 //
 
 #include "VoronoiGraph.h"
+
+#include <QApplication>
 #include <QtGui>
 #include <random>
 
@@ -180,6 +182,19 @@ void VoronoiGraph::paintEvent(QPaintEvent*) {
         }
     }
     p.end();
+}
+
+void VoronoiGraph::keyPressEvent(QKeyEvent* event) {
+    if (event->key()==Qt::Key_Escape) {
+        QApplication::exit();
+    }
+    if (!event->text().isEmpty()) {
+        basePoints = createBasePoints();
+        QMetaObject::invokeMethod(this, &VoronoiGraph::doUpscale, Qt::QueuedConnection);
+        event->accept();
+    } else {
+        QWidget::keyPressEvent(event);
+    }
 }
 
 void VoronoiGraph::doUpscale() {
