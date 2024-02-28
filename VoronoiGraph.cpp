@@ -9,7 +9,6 @@
 #include <random>
 
 // namespace bp = boost::polygon;
-// using boost::polygon::voronoi_builder;
 typedef VoronoiGraph::VDiagram  VDiagram;
 
 template <>
@@ -155,14 +154,12 @@ void VoronoiGraph::paintEvent(QPaintEvent*) {
     if (width()!=lastWidth) {
         upscaling = true;
         QMetaObject::invokeMethod(this, &VoronoiGraph::doUpscale, Qt::QueuedConnection);
-        // QTimer::singleShot(100, this, &VoronoiGraph::doUpscale);
         return;
     }
 
     auto p = QPainter(this);
     p.setPen(QPen(QBrush(Qt::blue), 3.0));
     for (Point const& pt : points) {
-        // qDebug() << QString("(%1, %2),  ").arg(pt.x).arg(pt.y);
         p.drawEllipse(int(lround(pt.x))-1, int(lround(pt.y))-1, 3,3);
     }
     p.setPen(QPen(QBrush(Qt::darkGreen), 2.0));
@@ -202,13 +199,3 @@ void VoronoiGraph::doUpscale() {
     upscaling = false;
     update();
 }
-
-// void VoronoiGraph::resizeEvent(QResizeEvent* event) {
-//     if (upscaling) {
-//         QWidget::resizeEvent(event);
-//         return;
-//     }
-//     upscaling = true;
-//     QTimer::singleShot(500, this, &VoronoiGraph::doUpscale);
-//     QWidget::resizeEvent(event);
-// }

@@ -70,7 +70,7 @@ protected:
 private:
     std::vector<Point> basePoints;
     bool upscaling = false;
-    Rect scale;
+    Rect scale = {};
     int lastWidth = 0;
     std::vector<Point> points;
     VDiagram vd;
